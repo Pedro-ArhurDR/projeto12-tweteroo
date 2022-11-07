@@ -3,15 +3,16 @@ import cors from 'cors'
 
 const app = express()
 
+//configs
 app.use(cors());
 app.use(express.json())
-let user = {}
-const tweets = [
-]
+//global V
+const users = []
+const tweets = []
 app.post("/sign-up", (req,res)=>{
     const data = req.body 
-    user = data
-    console.log(user)
+    users.push(data)
+    console.log('SEUS USUARIOS',users)
    res.send('OK')
 })
 
@@ -19,9 +20,11 @@ app.post("/sign-up", (req,res)=>{
 app.post("/tweets", (req,res)=>{
 
    const {username , tweet} = req.body
+   const result = users.find((element) => element.username === req.body.username);
+    
     const sendTweet = {
         username: username,
-        avatar: user.avatar,
+        avatar: result.avatar,
         tweet: tweet
     }
     tweets.unshift(sendTweet)
